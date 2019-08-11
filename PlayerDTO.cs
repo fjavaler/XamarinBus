@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using MongoDB.Driver;
+using MongoDB.Bson;
 
 namespace XamarinBus
 {
@@ -16,6 +18,18 @@ namespace XamarinBus
       firstName = _firstName;
       lastName = _lastName;
       position = _position;
+    }
+
+    public BsonDocument DtoToBsonDocument()
+    {
+      BsonDocument document = new BsonDocument()
+      {
+        { "firstName", this.firstName },
+        { "lastName", this.lastName },
+        { "position", this.position },
+      };
+
+      return document;
     }
   }
 }
