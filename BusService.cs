@@ -7,30 +7,32 @@
   //using MongoDB.Driver.Builders;
   //using MongoDB.Driver.GridFS;
   using MongoDB.Driver.Linq;
+  using System.Web;
 
-  class BusService
+  public class BusService
   {
-    public ObjectId Id { get; set; }
-    public string Name { get; set; }
+    private static MongoClient client { get; set; }
+    private static IMongoDatabase db { get; set; }
+    private static IMongoCollection<PlayerDTO> collection { get; set; }
 
     static void Main(string[] args)
     {
-      var client = new MongoClient();
-      var database = client.GetDatabase("FredsDB");
-      var collection = database.GetCollection<BsonDocument>("FredsCollection");
-      var document = new BsonDocument
+      client = new MongoClient();
+      db = client.GetDatabase("FredsDB");
+      collection = db.GetCollection<PlayerDTO>("FredsCollection");
+    }
+
+    public bool AddADocument(PlayerDTO dto)
+    {
+      try
       {
-          { "name", "MongoDB" },
-          { "type", "Database" },
-          { "count", 1 },
-          { "info", new BsonDocument
-          {
-              { "x", 203 },
-              { "y", 102 }
-          }}
-      };
-      collection.InsertOne(document);
-      
+        BsonDocument player = (BsonDocument)dto.ToBson();
+      }
+      catch (Exception e)
+      {
+        return false;
+      }
+      return true;
     }
   }
 }
