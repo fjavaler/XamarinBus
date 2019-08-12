@@ -31,5 +31,11 @@ namespace XamarinBus
 
       return document;
     }
+
+    public PlayerDTO BsonDocumentToDto(string firstName, string lastName, string position)
+    {
+      PlayerDTO playerDto = new PlayerDTO(firstName, lastName, position);
+      return playerDto;
+    }
   }
 }
